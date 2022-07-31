@@ -158,6 +158,13 @@
                                     </label>
                                 </subviews>
                             </stackView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GJi-zm-B3f">
+                                <rect key="frame" x="335" y="205" width="42" height="21"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LqT-C9-Jug">
                                 <rect key="frame" x="245" y="113" width="41.5" height="26"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -213,6 +220,7 @@
                         <outlet property="tapCoffee" destination="xfa-fr-5Zt" id="p4c-fh-dVP"/>
                         <outlet property="tapComplete" destination="Q7w-Lh-03x" id="sYk-2E-Eaj"/>
                         <outlet property="tapSmoothie" destination="ZpG-tV-NUP" id="U50-mW-Wvy"/>
+                        <outlet property="testLaaaabel" destination="GJi-zm-B3f" id="9eh-7H-a2n"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>

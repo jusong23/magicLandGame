@@ -18,6 +18,8 @@ class ViewController: UIViewController {
     var numC: Int = 0
     var numS: Int = 0
 
+    @IBOutlet weak var testLaaaabel: UILabel!
+    
     var BakeryTimer: DispatchSourceTimer?
     var CoffeeTimer: DispatchSourceTimer?
     var SmoothieTimer: DispatchSourceTimer?
@@ -30,6 +32,8 @@ class ViewController: UIViewController {
     var sumOfBakery:Int = 0
     var sumOfCoffee:Int = 0
     var sumOfSmoothie:Int = 0
+    
+    
     
     @IBOutlet weak var sumOfToday_label: UILabel!
     @IBOutlet weak var priceOfBakery: UILabel!
@@ -125,15 +129,9 @@ class ViewController: UIViewController {
             self.MainTimer?.resume()
         }
     }
-    
-//    func updateOrderDetail() {
-//        self.firstOrder_Bakery.text = String(self.guestDataModel.numberOfBakery(index: 0) ?? 0)
-//        self.secondOrder_Bakery.text = String(self.guestDataModel.numberOfBakery(index: 1) ?? 0)
-//        self.thirdOrder_Bakery.text = String(self.guestDataModel.numberOfBakery(index: 2) ?? 0)
-//    }
+
     
     func stopMainTimer() {
-//        self.sumOfToday.text = String(Int(self.priceOfBakery.text) + Int(self.prcieOfCoffee.text) + Int(self.priceOfSmoothie.text))
         self.tapBakery.isEnabled = false
         self.stopBakeryTimer()
         self.tapCoffee.isEnabled = false
@@ -149,8 +147,20 @@ class ViewController: UIViewController {
 
     @IBAction func tapBakery(_ sender: Any) {
         self.tapBakery.isEnabled = false
-        bakeryTimer()
-    }
+        
+        DispatchQueue.global().async {
+            self.bakeryTimer()
+        }
+        
+        DispatchQueue.global().async {
+            for i in 0...100 {
+                DispatchQueue.main.async {
+                    self.testLaaaabel.text = String(i)
+                }
+                usleep(1000000)
+            }
+        }
+    } // global 위에 main 쓰레드를 올려둠으로써 두개의 main 스레드를 동시에 관리할 수 있음 -- 애니메이션 넣기 & escaping closure 활용
     
     @IBAction func tapCoffee(_ sender: Any) {
         self.tapCoffee.isEnabled = false
