@@ -63,7 +63,6 @@ class ViewController: UIViewController {
     }
     
     func wellComeGuest() {
-    
         if self.wellComeGuestTimer == nil{
             self.wellComeGuestTimer = DispatchSource.makeTimerSource(flags: [], queue: .main)
             self.wellComeGuestTimer?.schedule(deadline: .now(), repeating: 3) // 타이머의 주기 설정 메소드
@@ -71,21 +70,20 @@ class ViewController: UIViewController {
                 guard let self = self else { return }
                 if self.guestDataModel.arrayGuestStruct.count < 3 {
                     print("손님이 3명 이하이니 추가")
-                    var numberOfBakery = Int(arc4random_uniform(6)+1)
-                    var numberOfCoffee  = Int(arc4random_uniform(6)+1)
-                    var numberOfSmoothie = Int(arc4random_uniform(6)+1)
+                    var numberOfBakery = Int(arc4random_uniform(3)+1)
+                    var numberOfCoffee  = Int(arc4random_uniform(3)+1)
+                    var numberOfSmoothie = Int(arc4random_uniform(3)+1)
 
                     self.guestDataModel.inputData(Bakery: numberOfBakery, Coffee: numberOfCoffee, Smoothie: numberOfSmoothie)
                     
                     self.firstOrder_Bakery.text? = String(self.guestDataModel.arrayGuestStruct[0].Bakery ?? 0)
                     self.firstOrder_Coffee.text = String(self.guestDataModel.arrayGuestStruct[0].Coffee ?? 0)
                     self.firstOrder_Smoothie.text = String(self.guestDataModel.arrayGuestStruct[0].Smoothie ?? 0)
-                
                 }
             })
         }
         self.wellComeGuestTimer?.resume()
-    } // 주문 시작 버튼
+    }
     
     func preventComeGuest() {
         self.wellComeGuestTimer?.cancel()
@@ -102,13 +100,11 @@ class ViewController: UIViewController {
     
     @IBAction func go(_ sender: Any) {
         self.onButton()
-        
         DispatchQueue.global(qos: .userInteractive).async {
             self.wellComeGuest()
         }
-        
         DispatchQueue.global(qos: .userInteractive).async {
-            var RestrictTime:Int = 100
+            var RestrictTime:Int = 60
             if self.MainTimer == nil{
                 self.MainTimer = DispatchSource.makeTimerSource(flags: [], queue: .main)
                 self.MainTimer?.schedule(deadline: .now(), repeating: 1) // 타이머의 주기 설정 메소드
@@ -174,8 +170,6 @@ class ViewController: UIViewController {
     
     @IBAction func CompleteOrder(_ sender: Any) {
         print("주문완료")
-//        self.sumOfToday_label.text
-        
         self.sumOfToday.append(sumOfBakery + sumOfCoffee + sumOfSmoothie)
         
         print("판매건수 : \(self.sumOfToday.count)")
