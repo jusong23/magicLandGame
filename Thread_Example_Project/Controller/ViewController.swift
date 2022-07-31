@@ -21,7 +21,8 @@ class ViewController: UIViewController {
     var CoffeeTimer: DispatchSourceTimer?
     var SmoothieTimer: DispatchSourceTimer?
     var MainTimer: DispatchSourceTimer?
-    var wellComeGuestTimer: DispatchSourceTimer?
+    var wellComeGuestTimer: DispatchSourceTimer? // 몇 초 뒤에 특정 작업을 수행 할 수 있음
+    // GCD : 작업을 병렬적으로 실행
     
     var guestDataModel = GuestDataModel ()
     
@@ -38,14 +39,23 @@ class ViewController: UIViewController {
 //        setupData03()
     }
     
+// intermidate GCD, COVID esapin
+// DispatchQueue 쓰기
+
+//MARK: - wellComeGuest
+    
     func wellComeGuest() {
         var wellComeGuest = self.guestDataModel.numberOfGuest()
 
         if self.wellComeGuestTimer == nil{
             self.wellComeGuestTimer = DispatchSource.makeTimerSource(flags: [], queue: .main)
+            // queue : 어떤 스레드에서할지! but UI작업이니 main 스레드(interface thread)로 설정해줘야함!
+            // 안그러면 네트워크랑 같이 백그라운드에서 같이 돌면서 오류남
             self.wellComeGuestTimer?.schedule(deadline: .now(), repeating: 3) // 타이머의 주기 설정 메소드
             self.wellComeGuestTimer?.setEventHandler(handler: { [weak self] in
+                // 그냥 self.로 설정해두면 handler 안의 값들이 계속 돌아갈 것이므로 메모리누수. weak self를 통해 일시적으로 사용할 때에만 self가 돌아가도록 설정 -> self?.timer 이런식으로 써야함
                 guard let self = self else { return }
+                // 일시적으로 self를 Strong Refernce만들어 타이머가 실행할 때에 쓰이는 self. 는 확실하게 있음을 보장, 즉 Controller에 타이머가 있든 없든 상관없이 이 안에서 쓰일때 만큼은 있으므로 self?. 안써도 됨
                 if wellComeGuest < 3 {
                     var numberOfBakery = Int(arc4random_uniform(6)+1)
                     var numberOfCoffee  = Int(arc4random_uniform(6)+1)
@@ -67,22 +77,49 @@ class ViewController: UIViewController {
     
     // 손님 3초에 한번씩 오게 손님은 종류별로 각각 1개 이상씩 주문할 것임 갯수는 랜덤
     
+//MARK: - GameStart
+    
     @IBAction func go(_ sender: Any) {
-        self.wellComeGuest()
-        var RestrictTime:Int = 30
-        if self.MainTimer == nil{
-            self.MainTimer = DispatchSource.makeTimerSource(flags: [], queue: .main)
-            self.MainTimer?.schedule(deadline: .now(), repeating: 1) // 타이머의 주기 설정 메소드
-            self.MainTimer?.setEventHandler(handler: { [weak self] in
-                guard let self = self else { return }
-                RestrictTime -= 1
-                self.mainTimeLabel.text = String(RestrictTime)
-                if RestrictTime == 1 {
-                    self.stopMainTimer()
-                }
-            })
+        DispatchQueue.global(qos: .userInteractive).async {
+            self.wellComeGuest() // 이 타이머랑 이 타이머를
         }
-        self.MainTimer?.resume()
+        
+        DispatchQueue.global(qos: .userInteractive).async {
+            var RestrictTime:Int = 30
+            if self.MainTimer == nil{
+                self.MainTimer = DispatchSource.makeTimerSource(flags: [], queue: .main)
+                self.MainTimer?.schedule(deadline: .now(), repeating: 1) // 타이머의 주기 설정 메소드
+                self.MainTimer?.setEventHandler(handler: { [weak self] in
+                    guard let self = self else { return }
+                    RestrictTime -= 1
+                    self.mainTimeLabel.text = String(RestrictTime)
+                    
+                    if self.BakeryTimer == nil {
+                        DispatchQueue.global(qos: .userInitiated).async {
+                            self.bakeryTimer() // 0 -> 100
+                        }
+                    }
+                    
+                    if self.CoffeeTimer == nil {
+                        DispatchQueue.global(qos: .userInitiated).async {
+                            self.coffeeTimer() // 100 -> 0
+                        }
+                    }
+
+                    if self.SmoothieTimer == nil {
+                        DispatchQueue.global(qos: .userInitiated).async {
+                            self.smoothieTimer() // 100 -> 0
+                        }   
+                    }
+                    
+                    if RestrictTime == 1 {
+                        self.stopMainTimer()
+                    }
+                })
+            }
+            self.MainTimer?.resume()
+        }
+       
     }
 
     func stopMainTimer() {
@@ -99,22 +136,22 @@ class ViewController: UIViewController {
         self.mainTimeLabel.text = "00:00:00"
     }
     
-    /// 2. 데이터가 섞여서 나타나는 경우
-    private func setupData02() {
-        
-        DispatchQueue.global(qos: .userInitiated).async {
-            self.bakeryTimer() // 0 -> 100
-        }
-        
-        DispatchQueue.global(qos: .userInitiated).async {
-            self.coffeeTimer() // 100 -> 0
-        }
-        
-        DispatchQueue.global(qos: .userInitiated).async {
-            self.smoothieTimer() // 100 -> 0
-        }
-    }
-    
+//    /// 2. 데이터가 섞여서 나타나는 경우
+//    private func setupData02() {
+//
+//        DispatchQueue.global(qos: .userInitiated).async {
+//            self.bakeryTimer() // 0 -> 100
+//        }
+//
+//        DispatchQueue.global(qos: .userInitiated).async {
+//            self.coffeeTimer() // 100 -> 0
+//        }
+//
+//        DispatchQueue.global(qos: .userInitiated).async {
+//            self.smoothieTimer() // 100 -> 0
+//        }
+//    }
+//
     @IBAction func tapBakery(_ sender: Any) {
         self.tapBakery.isEnabled = false
         bakeryTimer()
