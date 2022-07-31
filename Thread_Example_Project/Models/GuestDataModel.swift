@@ -9,8 +9,20 @@ import Foundation
 
 class GuestDataModel {
     public var arrayGuestStruct: [GuestStruct] = [
-        GuestStruct(Bakery: 1, Coffee: 1, Smoothie: 1)
+        
     ]
+    
+    public func numberOfBakery(index:Int) -> Int {
+        return self.arrayGuestStruct[index].Bakery!
+    }
+    
+    public func numberCoffee(index:Int) -> Int {
+        return self.arrayGuestStruct[index].Coffee!
+    }
+    
+    public func numberOfSmoothie(index:Int) -> Int {
+        return self.arrayGuestStruct[index].Smoothie!
+    }
     
     public func numberOfGuest() -> Int {
         return self.arrayGuestStruct.count
@@ -20,7 +32,7 @@ class GuestDataModel {
         self.arrayGuestStruct.append(GuestStruct(Bakery: Bakery, Coffee: Coffee, Smoothie: Smoothie))
     }
     
-    public func removeData(index: Int) {
-        self.arrayGuestStruct.remove(at: index)
+    public func removeData() {
+        self.arrayGuestStruct.removeFirst()
     }
 }
