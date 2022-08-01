@@ -18,7 +18,6 @@ class ViewController: UIViewController {
     var numC: Int = 0
     var numS: Int = 0
 
-    @IBOutlet weak var testLaaaabel: UILabel!
     
     var BakeryTimer: DispatchSourceTimer?
     var CoffeeTimer: DispatchSourceTimer?
@@ -33,7 +32,11 @@ class ViewController: UIViewController {
     var sumOfCoffee:Int = 0
     var sumOfSmoothie:Int = 0
     
+    @IBOutlet weak var cornImage: UIImageView!
+    @IBOutlet weak var starberryImage: UIImageView!
+    @IBOutlet weak var potatoImage: UIImageView!
     
+    @IBOutlet weak var testAsset: UIImageView!
     
     @IBOutlet weak var sumOfToday_label: UILabel!
     @IBOutlet weak var priceOfBakery: UILabel!
@@ -76,7 +79,7 @@ class ViewController: UIViewController {
 
                     self.guestDataModel.inputData(Bakery: numberOfBakery, Coffee: numberOfCoffee, Smoothie: numberOfSmoothie)
                     
-                    self.firstOrder_Bakery.text? = String(self.guestDataModel.arrayGuestStruct[0].Bakery ?? 0)
+                    self.firstOrder_Bakery.text = String(self.guestDataModel.arrayGuestStruct[0].Bakery ?? 0)
                     self.firstOrder_Coffee.text = String(self.guestDataModel.arrayGuestStruct[0].Coffee ?? 0)
                     self.firstOrder_Smoothie.text = String(self.guestDataModel.arrayGuestStruct[0].Smoothie ?? 0)
                 }
@@ -93,9 +96,9 @@ class ViewController: UIViewController {
     // 손님 3초에 한번씩 오게 손님은 종류별로 각각 1개 이상씩 주문할 것임 갯수는 랜덤
     
     func onButton() {
-        self.tapBakery.isEnabled = true
-        self.tapCoffee.isEnabled = true
-        self.tapSmoothie.isEnabled = true
+        self.tapBakery?.isEnabled = true
+        self.tapCoffee?.isEnabled = true
+        self.tapSmoothie?.isEnabled = true
     }
     
     @IBAction func go(_ sender: Any) {
@@ -149,10 +152,9 @@ class ViewController: UIViewController {
         }
         
         DispatchQueue.global().async {
-            for i in 0...100 {
                 DispatchQueue.main.async {
-                    self.testLaaaabel.text = String(i)
-                }
+//                    var index = Int(self.bakeryTime.text ?? "")
+//                    self.changeImage(index: index ?? 0)
                 usleep(1000000)
             }
         }
@@ -221,14 +223,14 @@ class ViewController: UIViewController {
 
     func bakeryTimer() {
         if self.BakeryTimer == nil{
-            var makeTime: Int = 8
+            var makeTime: Int = 5
             self.BakeryTimer = DispatchSource.makeTimerSource(flags: [], queue: .main)
             self.BakeryTimer?.schedule(deadline: .now(), repeating: 1) // 타이머의 주기 설정 메소드
             self.BakeryTimer?.setEventHandler(handler: { [weak self] in
                 guard let self = self else { return }
                 makeTime -= 1
                 self.bakeryTime.text = String(makeTime)
-//                print("베이커리 : \(makeTime)초")
+                self.changeImage_Corn(index: makeTime)
                 if makeTime == 0 {
                     self.tapBakery.isEnabled = true
                     self.stopBakeryTimer()
@@ -249,6 +251,26 @@ class ViewController: UIViewController {
         self.BakeryTimer?.resume()
     }
     
+    func changeImage_Corn(index: Int)  {
+        if index == 5 {
+            self.cornImage.image = UIImage.init(named: "Corn_Image-\(index)")
+        } else if index == 4 {
+            self.cornImage.image = UIImage.init(named: "Corn_Image-\(index)")
+
+        } else if index == 3 {
+            self.cornImage.image = UIImage.init(named: "Corn_Image-\(index)")
+
+        } else if index == 2 {
+            self.cornImage.image = UIImage.init(named: "Corn_Image-\(index)")
+
+        } else if index == 1 {
+            self.cornImage.image = UIImage.init(named: "Corn_Image-\(index)")
+
+        } else if index == 0{
+            self.cornImage.image = UIImage.init(named: "Corn_Image-\(index)")
+        }
+    }
+    
     func stopBakeryTimer() {
         self.BakeryTimer?.cancel()
         self.BakeryTimer = nil
@@ -258,13 +280,14 @@ class ViewController: UIViewController {
     
     func coffeeTimer() {
         if self.CoffeeTimer == nil{
-            var makeTime: Int = 4
+            var makeTime: Int = 5
             self.CoffeeTimer = DispatchSource.makeTimerSource(flags: [], queue: .main)
             self.CoffeeTimer?.schedule(deadline: .now(), repeating: 1) // 타이머의 주기 설정 메소드
             self.CoffeeTimer?.setEventHandler(handler: { [weak self] in
                 guard let self = self else { return }
                 makeTime -= 1
                 self.coffeeTime.text = String(makeTime)
+                self.changeImage_Starberry(index: makeTime)
                 if makeTime == 0 {
                     self.tapCoffee.isEnabled = true
                     self.stopCoffeeTimer()
@@ -284,6 +307,26 @@ class ViewController: UIViewController {
         }
         self.CoffeeTimer?.resume()
     }
+    
+    func changeImage_Starberry(index: Int)  {
+        if index == 5 {
+            self.starberryImage.image = UIImage.init(named: "Starberry_Image-\(index)")
+        } else if index == 4 {
+            self.starberryImage.image = UIImage.init(named: "Starberry_Image-\(index)")
+
+        } else if index == 3 {
+            self.starberryImage.image = UIImage.init(named: "Starberry_Image-\(index)")
+
+        } else if index == 2 {
+            self.starberryImage.image = UIImage.init(named: "Starberry_Image-\(index)")
+
+        } else if index == 1 {
+            self.starberryImage.image = UIImage.init(named: "Starberry_Image-\(index)")
+
+        } else if index == 0{
+            self.starberryImage.image = UIImage.init(named: "Starberry_Image-\(index)")
+        }
+    }
 
     func stopCoffeeTimer() {
         self.CoffeeTimer?.cancel()
@@ -301,6 +344,7 @@ class ViewController: UIViewController {
                 guard let self = self else { return }
                 makeTime -= 1
                 self.smoothieTime.text = String(makeTime)
+                self.changeImage_Potato(index: makeTime)
                 if makeTime == 1 {
                     self.tapSmoothie.isEnabled = true
                     self.stopSmoothieTimer()
@@ -318,6 +362,26 @@ class ViewController: UIViewController {
             })
         }
         self.SmoothieTimer?.resume()
+    }
+    
+    func changeImage_Potato(index: Int)  {
+        if index == 5 {
+            self.potatoImage.image = UIImage.init(named: "Potato_Image-\(index)")
+        } else if index == 4 {
+            self.potatoImage.image = UIImage.init(named: "Potato_Image-\(index)")
+
+        } else if index == 3 {
+            self.potatoImage.image = UIImage.init(named: "Potato_Image-\(index)")
+
+        } else if index == 2 {
+            self.potatoImage.image = UIImage.init(named: "Potato_Image-\(index)")
+
+        } else if index == 1 {
+            self.potatoImage.image = UIImage.init(named: "Potato_Image-\(index)")
+
+        } else if index == 0{
+            self.potatoImage.image = UIImage.init(named: "Potato_Image-\(index)")
+        }
     }
     
     func stopSmoothieTimer() {

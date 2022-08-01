@@ -14,6 +14,10 @@
 		2508260B2698210200922ABD /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2508260A2698210200922ABD /* Assets.xcassets */; };
 		2508260E2698210200922ABD /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2508260C2698210200922ABD /* LaunchScreen.storyboard */; };
 		25082617269828A000922ABD /* SecondController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 25082616269828A000922ABD /* SecondController.swift */; };
+		9B3F11572897AC2C00A89105 /* 스크린샷 2022-08-01 14.27.55.png in Resources */ = {isa = PBXBuildFile; fileRef = 9B3F11562897AC2C00A89105 /* 스크린샷 2022-08-01 14.27.55.png */; };
+		9B3F11592897ACC800A89105 /* 스크린샷 2022-08-01 15.40.03.png in Resources */ = {isa = PBXBuildFile; fileRef = 9B3F11582897ACC800A89105 /* 스크린샷 2022-08-01 15.40.03.png */; };
+		9B3F115B2897AF4400A89105 /* 스크린샷 2022-08-01 15.50.33.png in Resources */ = {isa = PBXBuildFile; fileRef = 9B3F115A2897AF4400A89105 /* 스크린샷 2022-08-01 15.50.33.png */; };
+		9B3F115D2897B0B300A89105 /* 스크린샷 2022-08-01 15.56.40.png in Resources */ = {isa = PBXBuildFile; fileRef = 9B3F115C2897B0B300A89105 /* 스크린샷 2022-08-01 15.56.40.png */; };
 		9BDC6DBE289565A900A2AE66 /* GuestStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BDC6DBD289565A900A2AE66 /* GuestStruct.swift */; };
 		9BDC6DC0289565E500A2AE66 /* GuestDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BDC6DBF289565E500A2AE66 /* GuestDataModel.swift */; };
 /* End PBXBuildFile section */
@@ -28,6 +32,10 @@
 		2508260D2698210200922ABD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2508260F2698210200922ABD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		25082616269828A000922ABD /* SecondController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SecondController.swift; sourceTree = "<group>"; };
+		9B3F11562897AC2C00A89105 /* 스크린샷 2022-08-01 14.27.55.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "스크린샷 2022-08-01 14.27.55.png"; path = "../../../../Desktop/ScreenShot/스크린샷 2022-08-01 14.27.55.png"; sourceTree = "<group>"; };
+		9B3F11582897ACC800A89105 /* 스크린샷 2022-08-01 15.40.03.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "스크린샷 2022-08-01 15.40.03.png"; path = "../../../../../../var/folders/3z/1d_1pw1s1vqd8nrfp044b0840000gn/T/TemporaryItems/NSIRD_screencaptureui_fDrjc9/스크린샷 2022-08-01 15.40.03.png"; sourceTree = "<group>"; };
+		9B3F115A2897AF4400A89105 /* 스크린샷 2022-08-01 15.50.33.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "스크린샷 2022-08-01 15.50.33.png"; path = "../../../../Desktop/ScreenShot/스크린샷 2022-08-01 15.50.33.png"; sourceTree = "<group>"; };
+		9B3F115C2897B0B300A89105 /* 스크린샷 2022-08-01 15.56.40.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "스크린샷 2022-08-01 15.56.40.png"; path = "../../../../Desktop/ScreenShot/스크린샷 2022-08-01 15.56.40.png"; sourceTree = "<group>"; };
 		9BDC6DBD289565A900A2AE66 /* GuestStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuestStruct.swift; sourceTree = "<group>"; };
 		9BDC6DBF289565E500A2AE66 /* GuestDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuestDataModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -69,6 +77,10 @@
 				250826152698289600922ABD /* Controller */,
 				2508260A2698210200922ABD /* Assets.xcassets */,
 				2508260F2698210200922ABD /* Info.plist */,
+				9B3F11562897AC2C00A89105 /* 스크린샷 2022-08-01 14.27.55.png */,
+				9B3F11582897ACC800A89105 /* 스크린샷 2022-08-01 15.40.03.png */,
+				9B3F115A2897AF4400A89105 /* 스크린샷 2022-08-01 15.50.33.png */,
+				9B3F115C2897B0B300A89105 /* 스크린샷 2022-08-01 15.56.40.png */,
 			);
 			path = Thread_Example_Project;
 			sourceTree = "<group>";
@@ -173,9 +185,13 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9B3F115D2897B0B300A89105 /* 스크린샷 2022-08-01 15.56.40.png in Resources */,
 				2508260E2698210200922ABD /* LaunchScreen.storyboard in Resources */,
 				2508260B2698210200922ABD /* Assets.xcassets in Resources */,
+				9B3F11592897ACC800A89105 /* 스크린샷 2022-08-01 15.40.03.png in Resources */,
 				250826092698210100922ABD /* Main.storyboard in Resources */,
+				9B3F115B2897AF4400A89105 /* 스크린샷 2022-08-01 15.50.33.png in Resources */,
+				9B3F11572897AC2C00A89105 /* 스크린샷 2022-08-01 14.27.55.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
