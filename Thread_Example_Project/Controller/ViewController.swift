@@ -31,12 +31,16 @@ class ViewController: UIViewController {
     var sumOfBakery:Int = 0
     var sumOfCoffee:Int = 0
     var sumOfSmoothie:Int = 0
-    
+        
     @IBOutlet weak var cornImage: UIImageView!
     @IBOutlet weak var starberryImage: UIImageView!
     @IBOutlet weak var potatoImage: UIImageView!
     
     @IBOutlet weak var testAsset: UIImageView!
+    
+    @IBOutlet weak var cornPrograssView: UIProgressView!
+    @IBOutlet weak var starberryPrograssView: UIProgressView!
+    @IBOutlet weak var potatoPrograssView: UIProgressView!
     
     @IBOutlet weak var sumOfToday_label: UILabel!
     @IBOutlet weak var priceOfBakery: UILabel!
@@ -48,9 +52,9 @@ class ViewController: UIViewController {
     @IBOutlet weak var firstOrder_Coffee: UILabel!
     @IBOutlet weak var firstOrder_Smoothie: UILabel!
 
-    @IBOutlet weak var bakeryTime: UILabel!
-    @IBOutlet weak var coffeeTime: UILabel!
-    @IBOutlet weak var smoothieTime: UILabel!
+//    @IBOutlet weak var bakeryTime: UILabel!
+//    @IBOutlet weak var coffeeTime: UILabel!
+//    @IBOutlet weak var smoothieTime: UILabel!
     
     @IBOutlet weak var numOfBakery: UILabel!
     @IBOutlet weak var numOfCoffee: UILabel!
@@ -63,7 +67,19 @@ class ViewController: UIViewController {
  
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if self.tapComplete.isEnabled == false {
+            self.tapComplete.backgroundColor = .black
+        }
     }
+
+    func willBeOver(completion: @escaping () -> Void) {
+        print("escaping closure가 선언된 함수가 실행되었습니다. 아래 클로저는 이 함수를 탈출할 것이고, 10초 뒤에 클로저에 담긴 print문이 실행될 것입니다.")
+        DispatchQueue.main.asyncAfter(deadline: .now() + 50) {
+            completion() // 파라미터로 입력된 클로저를 실행시키는 부분
+        }
+        print("escaping closure가 선언된 함수가 종료되었습니다. 하지만 이 함수에 담긴 클로저는 이와같이 종료되어도 바깥에서 실행될 겁니다.")
+    } // viewDidLoad 통해서 foo 함수 실행 start - end  . . .(3초뒤) "살아있지롱" 함수 실행 후! 3초 뒤 이다
     
     func wellComeGuest() {
         if self.wellComeGuestTimer == nil{
@@ -82,11 +98,38 @@ class ViewController: UIViewController {
                     self.firstOrder_Bakery.text = String(self.guestDataModel.arrayGuestStruct[0].Bakery ?? 0)
                     self.firstOrder_Coffee.text = String(self.guestDataModel.arrayGuestStruct[0].Coffee ?? 0)
                     self.firstOrder_Smoothie.text = String(self.guestDataModel.arrayGuestStruct[0].Smoothie ?? 0)
+                
                 }
+                
+                DispatchQueue.global(qos: .userInteractive).async {
+                    self.ascendingNumber()
+
+                }
+                DispatchQueue.global(qos: .userInteractive).async {
+                    self.descendingNumber()
+
+                }
+                
             })
         }
         self.wellComeGuestTimer?.resume()
     }
+    
+    func ascendingNumber() {
+        for i in 0...5 {
+
+            print("🍺  ",i)
+            usleep(100000)
+        }
+    }
+    
+    
+     func descendingNumber() {
+           for i in (0...5).reversed() {
+               print("🍗  ",i)
+               usleep(100000)
+           }
+     }
     
     func preventComeGuest() {
         self.wellComeGuestTimer?.cancel()
@@ -103,30 +146,31 @@ class ViewController: UIViewController {
     
     @IBAction func go(_ sender: Any) {
         self.onButton()
-        DispatchQueue.global(qos: .userInteractive).async {
-            self.wellComeGuest()
-        }
-        DispatchQueue.global(qos: .userInteractive).async {
-            var RestrictTime:Int = 60
-            if self.MainTimer == nil{
-                self.MainTimer = DispatchSource.makeTimerSource(flags: [], queue: .main)
-                self.MainTimer?.schedule(deadline: .now(), repeating: 1) // 타이머의 주기 설정 메소드
-                self.MainTimer?.setEventHandler(handler: { [weak self] in
-                    guard let self = self else { return }
-                    RestrictTime -= 1
-                    self.mainTimeLabel.text = String(RestrictTime)
-                    
-                    if RestrictTime == 0 {
-                        self.stopMainTimer()
-                    }
-                    
-                    if self.completeOrder.count == 3 {
-                        self.tapComplete.isEnabled = true
-                    }
-                })
+        self.wellComeGuest()
+    
+        var RestrictTime:Int = 60
+        if self.MainTimer == nil{
+            self.willBeOver {
+                print("-------------실행 종료 10초 전 ---------------")
             }
-            self.MainTimer?.resume()
+            self.MainTimer = DispatchSource.makeTimerSource(flags: [], queue: .main)
+            self.MainTimer?.schedule(deadline: .now(), repeating: 1) // 타이머의 주기 설정 메소드
+            self.MainTimer?.setEventHandler(handler: { [weak self] in
+                guard let self = self else { return }
+                RestrictTime -= 1
+                self.mainTimeLabel.text = String(RestrictTime)
+                
+                if RestrictTime == 0 {
+                    self.stopMainTimer()
+                }
+                
+                if self.completeOrder.count == 3 {
+                    self.tapComplete.isEnabled = true
+                }
+            })
         }
+        self.MainTimer?.resume()
+
     }
 
     
@@ -144,33 +188,36 @@ class ViewController: UIViewController {
         self.mainTimeLabel.text = "끝"
     }
 
-    @IBAction func tapBakery(_ sender: Any) {
+    @IBAction func tapBakery_Action(_ sender: Any) {
         self.tapBakery.isEnabled = false
-        
+
         DispatchQueue.global().async {
             self.bakeryTimer()
         }
         
         DispatchQueue.global().async {
                 DispatchQueue.main.async {
-//                    var index = Int(self.bakeryTime.text ?? "")
-//                    self.changeImage(index: index ?? 0)
+//                    self.tapBakery.setTitle("재배 중", for: .normal)
                 usleep(1000000)
             }
         }
     } // global 위에 main 쓰레드를 올려둠으로써 두개의 main 스레드를 동시에 관리할 수 있음 -- 애니메이션 넣기 & escaping closure 활용
     
-    @IBAction func tapCoffee(_ sender: Any) {
+    @IBAction func tapCoffee_Action(_ sender: Any) {
         self.tapCoffee.isEnabled = false
         coffeeTimer()
     }
     
-    @IBAction func tapSmoothie(_ sender: Any) {
+    @IBAction func tapSmoothie_Action(_ sender: Any) {
         self.tapSmoothie.isEnabled = false
         smoothieTimer()
     }
     
     @IBAction func CompleteOrder(_ sender: Any) {
+        self.cornImage.image = nil
+        self.starberryImage.image = nil
+        self.potatoImage.image = nil
+
         print("주문완료")
         self.sumOfToday.append(sumOfBakery + sumOfCoffee + sumOfSmoothie)
         
@@ -222,16 +269,22 @@ class ViewController: UIViewController {
 //MARK: - BAKERY
 
     func bakeryTimer() {
+
         if self.BakeryTimer == nil{
             var makeTime: Int = 5
+            var duration: Int = 5
             self.BakeryTimer = DispatchSource.makeTimerSource(flags: [], queue: .main)
             self.BakeryTimer?.schedule(deadline: .now(), repeating: 1) // 타이머의 주기 설정 메소드
+            
             self.BakeryTimer?.setEventHandler(handler: { [weak self] in
                 guard let self = self else { return }
                 makeTime -= 1
-                self.bakeryTime.text = String(makeTime)
+//                self.bakeryTime.text = String(makeTime)
                 self.changeImage_Corn(index: makeTime)
+                self.cornPrograssView.progress = Float(makeTime) / Float(duration)
+                self.tapBakery.setTitle("재배 중", for: .normal)
                 if makeTime == 0 {
+                    self.tapBakery.setTitle("재배 하기", for: .normal)
                     self.tapBakery.isEnabled = true
                     self.stopBakeryTimer()
                     self.numB += 1
@@ -239,7 +292,8 @@ class ViewController: UIViewController {
                     self.sumOfBakery = 5000 * self.numB
                     self.priceOfBakery.text = String(self.sumOfBakery)
                     if self.numB == self.guestDataModel.arrayGuestStruct[0].Bakery! {
-                        print("베이커리 완료")
+                        self.cornImage.image = UIImage.init(named: "스크린샷_2022-08-01_17.49.27-removebg-preview.png")
+                        self.tapBakery.setTitle("재배 완료", for: .normal)
                         self.tapBakery.isEnabled = false
                         self.numOfBakery.textColor = .red
                         self.completeOrder.append(1)
@@ -247,9 +301,12 @@ class ViewController: UIViewController {
                  
                 }
             })
+            
+            
         }
         self.BakeryTimer?.resume()
     }
+
     
     func changeImage_Corn(index: Int)  {
         if index == 5 {
@@ -281,14 +338,18 @@ class ViewController: UIViewController {
     func coffeeTimer() {
         if self.CoffeeTimer == nil{
             var makeTime: Int = 5
+            var duration: Int = 5
             self.CoffeeTimer = DispatchSource.makeTimerSource(flags: [], queue: .main)
             self.CoffeeTimer?.schedule(deadline: .now(), repeating: 1) // 타이머의 주기 설정 메소드
             self.CoffeeTimer?.setEventHandler(handler: { [weak self] in
                 guard let self = self else { return }
                 makeTime -= 1
-                self.coffeeTime.text = String(makeTime)
+//                self.coffeeTime.text = String(makeTime)
                 self.changeImage_Starberry(index: makeTime)
+                self.starberryPrograssView.progress = Float(makeTime) / Float(duration)
+                self.tapCoffee.setTitle("재배 중", for: .normal)
                 if makeTime == 0 {
+                    self.tapCoffee.setTitle("재배 하기", for: .normal)
                     self.tapCoffee.isEnabled = true
                     self.stopCoffeeTimer()
                     self.numC += 1
@@ -296,7 +357,8 @@ class ViewController: UIViewController {
                     self.sumOfCoffee = 4000 * self.numC
                     self.prcieOfCoffee.text = String(self.sumOfCoffee)
                     if self.numC == self.guestDataModel.arrayGuestStruct[0].Coffee! {
-                        print("커피 완료")
+                        self.starberryImage.image = UIImage.init(named: "스크린샷_2022-08-01_17.49.27-removebg-preview.png")
+                        self.tapCoffee.setTitle("재배 완료", for: .normal)
                         self.tapCoffee.isEnabled = false
                         self.numOfCoffee.textColor = .red
                         self.completeOrder.append(1)
@@ -337,15 +399,19 @@ class ViewController: UIViewController {
     
     func smoothieTimer() {
         if self.SmoothieTimer == nil{
-            var makeTime: Int = 6
+            var makeTime: Int = 5
+            var duration: Int = 5
             self.SmoothieTimer = DispatchSource.makeTimerSource(flags: [], queue: .main)
             self.SmoothieTimer?.schedule(deadline: .now(), repeating: 1) // 타이머의 주기 설정 메소드
             self.SmoothieTimer?.setEventHandler(handler: { [weak self] in
                 guard let self = self else { return }
                 makeTime -= 1
-                self.smoothieTime.text = String(makeTime)
+//                self.smoothieTime.text = String(makeTime)
                 self.changeImage_Potato(index: makeTime)
-                if makeTime == 1 {
+                self.potatoPrograssView.progress = Float(makeTime) / Float(duration)
+                self.tapSmoothie.setTitle("재배 중", for: .normal)
+                if makeTime == 0 {
+                    self.tapSmoothie.setTitle("재배 하기", for: .normal)
                     self.tapSmoothie.isEnabled = true
                     self.stopSmoothieTimer()
                     self.numS += 1
@@ -353,7 +419,8 @@ class ViewController: UIViewController {
                     self.sumOfSmoothie = 3000 * self.numS
                     self.priceOfSmoothie.text = String(self.sumOfSmoothie)
                     if self.numS == self.guestDataModel.arrayGuestStruct[0].Smoothie! {
-                        print("스무디 완료")
+                        self.tapSmoothie.setTitle("재배 완료", for: .normal)
+                        self.potatoImage.image = UIImage.init(named: "스크린샷_2022-08-01_17.49.27-removebg-preview.png")
                         self.tapSmoothie.isEnabled = false
                         self.numOfSmoothie.textColor = .red
                         self.completeOrder.append(1)
