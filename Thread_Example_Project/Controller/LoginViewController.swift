@@ -8,8 +8,13 @@
 import UIKit
 import GoogleSignIn
 
+protocol SendNickNameDelegate: AnyObject {
+    func sendNickName(name: String)
+}
+
 class LoginViewController: UIViewController {
     
+    weak var delegate: SendNickNameDelegate?
     var loginCompleteNumber = 0
     
     @IBOutlet weak var google: UIButton!
@@ -35,7 +40,8 @@ class LoginViewController: UIViewController {
 //                      self.present(viewController, animated: true, completion: nil)
                 
                 
-                guard let viewController = self.storyboard?.instantiateViewController(withIdentifier: "ViewController") else { return }
+                guard let viewController = self.storyboard?.instantiateViewController(withIdentifier: "ViewController") as? ViewController else { return }
+                viewController.name = user.profile?.name
                     self.navigationController?.pushViewController(viewController, animated: true)
                 
                 self.loginCompleteNumber -= 1

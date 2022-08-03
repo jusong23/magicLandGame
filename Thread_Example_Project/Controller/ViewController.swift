@@ -18,6 +18,10 @@ class ViewController: UIViewController {
     var numC: Int = 0
     var numS: Int = 0
 
+   var guests:[String] = ["스크린샷_2022-08-03_16.44.53-removebg-preview.png",
+                           "스크린샷_2022-08-03_16.49.31-removebg-preview.png",
+                           "스크린샷_2022-08-03_16.50.17-removebg-preview.png"
+                            ]
     
     var BakeryTimer: DispatchSourceTimer?
     var CoffeeTimer: DispatchSourceTimer?
@@ -32,12 +36,35 @@ class ViewController: UIViewController {
     var sumOfCoffee:Int = 0
     var sumOfSmoothie:Int = 0
         
+    @IBOutlet weak var foodNameStackView: UIStackView!
+    @IBOutlet weak var foodCountStackView: UIStackView!
+    
+    @IBOutlet weak var waitingStackView: UIStackView!
+    
+    @IBOutlet weak var guestImage: UIImageView!
+    
+    @IBOutlet weak var waiting: UILabel!
+    
+    @IBOutlet weak var nickName: UILabel!
+    var name: String?
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        UserDefaults.standard.setValue(1, forKey: "LOGINED")
+        self.navigationController?.navigationBar.isHidden = true
+        if let codePresentName = name {
+            self.nickName.text = codePresentName
+        }
+    }
+    
+    
+    @IBOutlet weak var gameStart: UIButton!
+    @IBOutlet weak var wellcomeStackView: UIStackView!
+    
     @IBOutlet weak var cornImage: UIImageView!
     @IBOutlet weak var starberryImage: UIImageView!
     @IBOutlet weak var potatoImage: UIImageView!
-    
-    @IBOutlet weak var testAsset: UIImageView!
-    
+        
     @IBOutlet weak var cornPrograssView: UIProgressView!
     @IBOutlet weak var starberryPrograssView: UIProgressView!
     @IBOutlet weak var potatoPrograssView: UIProgressView!
@@ -65,11 +92,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var tapCoffee: UIButton!
     @IBOutlet weak var tapSmoothie: UIButton!
  
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        UserDefaults.standard.setValue(1, forKey: "LOGINED")
-        self.navigationController?.navigationBar.isHidden = true
-    }
+
 
     func willBeOver(completion: @escaping () -> Void) {
         print("escaping closure가 선언된 함수가 실행되었습니다. 아래 클로저는 이 함수를 탈출할 것이고, 10초 뒤에 클로저에 담긴 print문이 실행될 것입니다.")
@@ -82,11 +105,12 @@ class ViewController: UIViewController {
     func wellComeGuest() {
         if self.wellComeGuestTimer == nil{
             self.wellComeGuestTimer = DispatchSource.makeTimerSource(flags: [], queue: .main)
-            self.wellComeGuestTimer?.schedule(deadline: .now(), repeating: 3) // 타이머의 주기 설정 메소드
+            self.wellComeGuestTimer?.schedule(deadline: .now(), repeating: 7) // 타이머의 주기 설정 메소드
             self.wellComeGuestTimer?.setEventHandler(handler: { [weak self] in
                 guard let self = self else { return }
                 if self.guestDataModel.arrayGuestStruct.count < 3 {
-                    print("손님이 3명 이하이므로 손님 추가")
+                    print("손님이 3명 이하이므로 손님 추가(7초에 한번)")
+                   
                     var numberOfBakery = Int(arc4random_uniform(3)+1)
                     var numberOfCoffee  = Int(arc4random_uniform(3)+1)
                     var numberOfSmoothie = Int(arc4random_uniform(3)+1)
@@ -96,7 +120,13 @@ class ViewController: UIViewController {
                     self.firstOrder_Bakery.text = String(self.guestDataModel.arrayGuestStruct[0].Bakery ?? 0)
                     self.firstOrder_Coffee.text = String(self.guestDataModel.arrayGuestStruct[0].Coffee ?? 0)
                     self.firstOrder_Smoothie.text = String(self.guestDataModel.arrayGuestStruct[0].Smoothie ?? 0)
-                
+                    self.waiting.text = String(self.guestDataModel.arrayGuestStruct.count)
+                    if self.guestDataModel.arrayGuestStruct.count == 3 {
+                        self.waiting.textColor = .red
+                    }
+                }
+                else {
+                    print("대기인원이 3명 이상입니다. 밖에 손님들이 화가 났어요!")
                 }
 //
 //                DispatchQueue.global(qos: .userInteractive).async {
@@ -143,6 +173,14 @@ class ViewController: UIViewController {
     }
     
     @IBAction func go(_ sender: Any) {
+        self.guestImage.isHidden = false
+        self.guestImage.image = UIImage(named: self.guests[0])
+        self.gameStart.isHidden = true
+        self.wellcomeStackView.isHidden = true
+        self.foodNameStackView.isHidden = false
+        self.foodCountStackView.isHidden = false
+        self.waitingStackView.isHidden = false
+        
         self.onButton()
         self.wellComeGuest()
     
@@ -150,9 +188,10 @@ class ViewController: UIViewController {
         self.tapComplete.setTitle("재배 중 입니다. . .", for: .normal)
         
         var RestrictTime:Int = 60
+        
         if self.MainTimer == nil{
             self.willBeOver {
-                print("-------------실행 종료 10초 전 ---------------")
+                self.mainTimeLabel.textColor = UIColor.red
             }
             self.MainTimer = DispatchSource.makeTimerSource(flags: [], queue: .main)
             self.MainTimer?.schedule(deadline: .now(), repeating: 1) // 타이머의 주기 설정 메소드
@@ -168,6 +207,8 @@ class ViewController: UIViewController {
                 if self.completeOrder.count == 3 {
                     self.tapComplete.backgroundColor = .red
                     self.tapComplete.setTitle("주문 완료", for: .normal)
+                  
+
                 }
             })
         }
@@ -177,6 +218,13 @@ class ViewController: UIViewController {
 
     
     func stopMainTimer() {
+        self.gameStart.isHidden = false
+        self.wellcomeStackView.isHidden = false
+        self.guestImage.isHidden = true
+        self.foodNameStackView.isHidden = true
+        self.foodCountStackView.isHidden = true
+        self.waitingStackView.isHidden = true
+
         self.tapBakery.isEnabled = false
         self.stopBakeryTimer()
         self.tapCoffee.isEnabled = false
@@ -216,6 +264,8 @@ class ViewController: UIViewController {
     }
     
     @IBAction func CompleteOrder(_ sender: Any) {
+        self.guestImage.image = UIImage(named: self.guests[Int(arc4random_uniform(2))])
+        
         self.cornImage.image = nil
         self.starberryImage.image = nil
         self.potatoImage.image = nil
@@ -363,7 +413,6 @@ class ViewController: UIViewController {
                         self.tapCoffee.isEnabled = false
                         self.numOfCoffee.textColor = .red
                         self.completeOrder.append(1)
-
                     }
                 }
             })
