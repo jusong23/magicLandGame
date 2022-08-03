@@ -31,22 +31,22 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     func sceneDidBecomeActive(_ scene: UIScene) {
 
-            
-            self.boolValue += 1
-            
-            if boolValue > 1 {
-                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()) {
-                    self.window?.rootViewController = UIStoryboard(name: "Main", bundle: nil).instantiateInitialViewController()
-                    let Alert = UIAlertController(
-                        title: "",
-                        message: "계속 하시겠습니까?",
-                        preferredStyle: UIAlertController.Style.alert
-                    )
-                    let AllowAction = UIAlertAction(title: "확인", style: UIAlertAction.Style.default, handler: nil)
-                    Alert.addAction(AllowAction)
-                    self.window?.rootViewController?.present(Alert, animated: true, completion: nil)
-                }
-            }
+//            
+//            self.boolValue += 1
+//            
+//            if boolValue > 1 {
+//                DispatchQueue.main.asyncAfter(deadline: DispatchTime.now()) {
+//                    self.window?.rootViewController = UIStoryboard(name: "Main", bundle: nil).instantiateInitialViewController()
+//                    let Alert = UIAlertController(
+//                        title: "",
+//                        message: "계속 하시겠습니까?",
+//                        preferredStyle: UIAlertController.Style.alert
+//                    )
+//                    let AllowAction = UIAlertAction(title: "확인", style: UIAlertAction.Style.default, handler: nil)
+//                    Alert.addAction(AllowAction)
+//                    self.window?.rootViewController?.present(Alert, animated: true, completion: nil)
+//                }
+//            }
             
             // TODO: 3. 앱이 다시 활성화 상태가 되면 이미지뷰를 superview (window)에서 제거한다
             if let imageView = imageView {

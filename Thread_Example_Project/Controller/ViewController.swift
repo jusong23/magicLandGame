@@ -67,10 +67,8 @@ class ViewController: UIViewController {
  
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        if self.tapComplete.isEnabled == false {
-            self.tapComplete.backgroundColor = .black
-        }
+        UserDefaults.standard.setValue(1, forKey: "LOGINED")
+        self.navigationController?.navigationBar.isHidden = true
     }
 
     func willBeOver(completion: @escaping () -> Void) {
@@ -88,7 +86,7 @@ class ViewController: UIViewController {
             self.wellComeGuestTimer?.setEventHandler(handler: { [weak self] in
                 guard let self = self else { return }
                 if self.guestDataModel.arrayGuestStruct.count < 3 {
-                    print("손님이 3명 이하이니 추가")
+                    print("손님이 3명 이하이므로 손님 추가")
                     var numberOfBakery = Int(arc4random_uniform(3)+1)
                     var numberOfCoffee  = Int(arc4random_uniform(3)+1)
                     var numberOfSmoothie = Int(arc4random_uniform(3)+1)
@@ -100,16 +98,16 @@ class ViewController: UIViewController {
                     self.firstOrder_Smoothie.text = String(self.guestDataModel.arrayGuestStruct[0].Smoothie ?? 0)
                 
                 }
-                
-                DispatchQueue.global(qos: .userInteractive).async {
-                    self.ascendingNumber()
-
-                }
-                DispatchQueue.global(qos: .userInteractive).async {
-                    self.descendingNumber()
-
-                }
-                
+//
+//                DispatchQueue.global(qos: .userInteractive).async {
+//                    self.ascendingNumber()
+//
+//                }
+//                DispatchQueue.global(qos: .userInteractive).async {
+//                    self.descendingNumber()
+//
+//                }
+//
             })
         }
         self.wellComeGuestTimer?.resume()
@@ -148,6 +146,9 @@ class ViewController: UIViewController {
         self.onButton()
         self.wellComeGuest()
     
+        self.tapComplete.backgroundColor = .black
+        self.tapComplete.setTitle("재배 중 입니다. . .", for: .normal)
+        
         var RestrictTime:Int = 60
         if self.MainTimer == nil{
             self.willBeOver {
@@ -165,7 +166,8 @@ class ViewController: UIViewController {
                 }
                 
                 if self.completeOrder.count == 3 {
-                    self.tapComplete.isEnabled = true
+                    self.tapComplete.backgroundColor = .red
+                    self.tapComplete.setTitle("주문 완료", for: .normal)
                 }
             })
         }
@@ -260,7 +262,6 @@ class ViewController: UIViewController {
         self.sumOfCoffee = 0
         self.sumOfSmoothie = 0
         
-        self.tapComplete.isEnabled = false
     }
 
     
