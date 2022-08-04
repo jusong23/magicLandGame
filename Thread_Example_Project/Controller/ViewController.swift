@@ -46,6 +46,7 @@ class ViewController: UIViewController {
     @IBOutlet weak var waiting: UILabel!
     
     @IBOutlet weak var nickName: UILabel!
+    
     var name: String?
 
     override func viewDidLoad() {
@@ -55,8 +56,10 @@ class ViewController: UIViewController {
         if let codePresentName = name {
             self.nickName.text = codePresentName
         }
+        
+        
+ 
     }
-    
     
     @IBOutlet weak var gameStart: UIButton!
     @IBOutlet weak var wellcomeStackView: UIStackView!
@@ -78,10 +81,6 @@ class ViewController: UIViewController {
     @IBOutlet weak var firstOrder_Bakery: UILabel!
     @IBOutlet weak var firstOrder_Coffee: UILabel!
     @IBOutlet weak var firstOrder_Smoothie: UILabel!
-
-//    @IBOutlet weak var bakeryTime: UILabel!
-//    @IBOutlet weak var coffeeTime: UILabel!
-//    @IBOutlet weak var smoothieTime: UILabel!
     
     @IBOutlet weak var numOfBakery: UILabel!
     @IBOutlet weak var numOfCoffee: UILabel!
@@ -92,8 +91,6 @@ class ViewController: UIViewController {
     @IBOutlet weak var tapCoffee: UIButton!
     @IBOutlet weak var tapSmoothie: UIButton!
  
-
-
     func willBeOver(completion: @escaping () -> Void) {
         print("escaping closure가 선언된 함수가 실행되었습니다. 아래 클로저는 이 함수를 탈출할 것이고, 10초 뒤에 클로저에 담긴 print문이 실행될 것입니다.")
         DispatchQueue.main.asyncAfter(deadline: .now() + 50) {
@@ -151,8 +148,7 @@ class ViewController: UIViewController {
         }
     }
     
-    
-     func descendingNumber() {
+    func descendingNumber() {
            for i in (0...5).reversed() {
                print("🍗  ",i)
                usleep(100000)
@@ -163,14 +159,35 @@ class ViewController: UIViewController {
         self.wellComeGuestTimer?.cancel()
         self.wellComeGuestTimer = nil
     }
-    
-    // 손님 3초에 한번씩 오게 손님은 종류별로 각각 1개 이상씩 주문할 것임 갯수는 랜덤
-    
+            
     func onButton() {
         self.tapBakery?.isEnabled = true
         self.tapCoffee?.isEnabled = true
         self.tapSmoothie?.isEnabled = true
     }
+
+    func stopMainTimer() {
+        self.gameStart.isHidden = false
+        self.wellcomeStackView.isHidden = false
+        self.guestImage.isHidden = true
+        self.foodNameStackView.isHidden = true
+        self.foodCountStackView.isHidden = true
+        self.waitingStackView.isHidden = true
+
+        self.tapBakery.isEnabled = false
+        self.stopBakeryTimer()
+        self.tapCoffee.isEnabled = false
+        self.stopCoffeeTimer()
+        self.tapSmoothie.isEnabled = false
+        self.stopSmoothieTimer()
+        self.preventComeGuest()
+        
+        self.MainTimer?.cancel()
+        self.MainTimer = nil
+        self.mainTimeLabel.text = "끝"
+    }
+    
+//MARK: - 게임실행 버튼 (onButton, wellComeGuest, stopMainTimer, willBeOver[@escaping] )
     
     @IBAction func go(_ sender: Any) {
         self.guestImage.isHidden = false
@@ -207,7 +224,6 @@ class ViewController: UIViewController {
                 if self.completeOrder.count == 3 {
                     self.tapComplete.backgroundColor = .red
                     self.tapComplete.setTitle("주문 완료", for: .normal)
-                  
 
                 }
             })
@@ -215,28 +231,8 @@ class ViewController: UIViewController {
         self.MainTimer?.resume()
 
     }
-
     
-    func stopMainTimer() {
-        self.gameStart.isHidden = false
-        self.wellcomeStackView.isHidden = false
-        self.guestImage.isHidden = true
-        self.foodNameStackView.isHidden = true
-        self.foodCountStackView.isHidden = true
-        self.waitingStackView.isHidden = true
-
-        self.tapBakery.isEnabled = false
-        self.stopBakeryTimer()
-        self.tapCoffee.isEnabled = false
-        self.stopCoffeeTimer()
-        self.tapSmoothie.isEnabled = false
-        self.stopSmoothieTimer()
-        self.preventComeGuest()
-        
-        self.MainTimer?.cancel()
-        self.MainTimer = nil
-        self.mainTimeLabel.text = "끝"
-    }
+//MARK: - 각 농작물 재배 시작하는 버튼
 
     @IBAction func tapBakery_Action(_ sender: Any) {
         self.tapBakery.isEnabled = false
@@ -262,6 +258,8 @@ class ViewController: UIViewController {
         self.tapSmoothie.isEnabled = false
         smoothieTimer()
     }
+
+//MARK: - 주문완료 버튼
     
     @IBAction func CompleteOrder(_ sender: Any) {
         self.guestImage.image = UIImage(named: self.guests[Int(arc4random_uniform(2))])
@@ -314,9 +312,6 @@ class ViewController: UIViewController {
         
     }
 
-    
-    
-    
 //MARK: - BAKERY
 
     func bakeryTimer() {
@@ -358,7 +353,6 @@ class ViewController: UIViewController {
         self.BakeryTimer?.resume()
     }
 
-    
     func changeImage_Corn(index: Int)  {
         if index == 5 {
             self.cornImage.image = UIImage.init(named: "Corn_Image-\(index)")
@@ -506,19 +500,6 @@ class ViewController: UIViewController {
         self.SmoothieTimer = nil
     }
     
-        
-//        didFinishDoSomething { result in
-//            if result == 100 {
-//                print("돈이 부족합니다.")
-//            } else {
-//                print("UI Update")
-//            }
-//        }
-    
-//    func didFinishDoSomething(onCompleted : @escaping (Int) -> Void) {
-//        let result = 123 // <-- 100분
-//        onCompleted(result)
-//    }
-} // @escaping는 주문 완료되었을 시에 그 다음 음료나가는 거 구현할 때 사용
+}
 
 
