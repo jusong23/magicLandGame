@@ -23,6 +23,8 @@ class ViewController: UIViewController {
                            "스크린샷_2022-08-03_16.50.17-removebg-preview.png"
                             ]
     
+    var say:[String] = ["난 옥수수가 좋아","언제 주시는거지..","배고파 죽겠네!"]
+    
     var BakeryTimer: DispatchSourceTimer?
     var CoffeeTimer: DispatchSourceTimer?
     var SmoothieTimer: DispatchSourceTimer?
@@ -35,6 +37,15 @@ class ViewController: UIViewController {
     var sumOfBakery:Int = 0
     var sumOfCoffee:Int = 0
     var sumOfSmoothie:Int = 0
+    
+    var RestrictTime:Int = 60
+
+    
+    @IBOutlet weak var sayBallon: UILabel!
+    
+    @IBOutlet weak var asyncImag_1: UIImageView!
+    @IBOutlet weak var asyncImage_2: UIImageView!
+
     
     @IBOutlet weak var angryImage: UIImageView!
     @IBOutlet weak var sellingCount: UILabel!
@@ -61,7 +72,6 @@ class ViewController: UIViewController {
         }
         
         
- 
     }
     
     @IBOutlet weak var gameStart: UIButton!
@@ -130,16 +140,12 @@ class ViewController: UIViewController {
                     print("대기인원이 3명 이상입니다. 밖에 손님들이 화가 났어요!")
                     self.angryImage?.isHidden = false
                 }
-//
-//                DispatchQueue.global(qos: .userInteractive).async {
-//                    self.ascendingNumber()
-//
-//                }
+
 //                DispatchQueue.global(qos: .userInteractive).async {
 //                    self.descendingNumber()
 //
 //                }
-//
+
             })
         }
         self.wellComeGuestTimer?.resume()
@@ -201,6 +207,8 @@ class ViewController: UIViewController {
 //MARK: - 게임실행 버튼 (onButton, wellComeGuest, stopMainTimer, willBeOver[@escaping] )
     
     @IBAction func go(_ sender: Any) {
+        self.asyncImag_1.isHidden = false
+        self.sayBallon.isHidden = false
         self.sellingStackView.isHidden = false
         self.guestImage.isHidden = false
         self.guestImage.image = UIImage(named: "스크린샷_2022-08-03_16.44.53-removebg-preview.png")
@@ -217,7 +225,6 @@ class ViewController: UIViewController {
         self.tapComplete.backgroundColor = .black
         self.tapComplete.setTitle("재배 중 입니다. . .", for: .normal)
         
-        var RestrictTime:Int = 60
         
         if self.MainTimer == nil{
             self.willBeOver {
@@ -227,10 +234,12 @@ class ViewController: UIViewController {
             self.MainTimer?.schedule(deadline: .now(), repeating: 1) // 타이머의 주기 설정 메소드
             self.MainTimer?.setEventHandler(handler: { [weak self] in
                 guard let self = self else { return }
-                RestrictTime -= 1
-                self.mainTimeLabel.text = String(RestrictTime)
                 
-                if RestrictTime == 0 {
+                self.asyncImage()
+                self.RestrictTime -= 1
+                self.mainTimeLabel.text = String(self.RestrictTime)
+                
+                if self.RestrictTime == 0 {
                     self.stopMainTimer()
                 }
                 
@@ -243,8 +252,46 @@ class ViewController: UIViewController {
             })
         }
         self.MainTimer?.resume()
-
     }
+    
+    func asyncImage() {
+        DispatchQueue.global(qos: .userInteractive).async {
+            
+            DispatchQueue.main.async {
+                self.sayBallon.text = self.say[Int(arc4random_uniform(3))]
+            }
+            
+            DispatchQueue.main.async {
+                DispatchQueue.main.async {
+                    UIView.animate(withDuration: 0.5, delay: 0, animations: {
+                        self.asyncImag_1.transform = CGAffineTransform(scaleX: 1.7, y: 1.7)
+                        })
+                    UIView.animate(withDuration: 0.5, delay: 0.5, animations: {
+                        self.asyncImag_1.transform = CGAffineTransform(scaleX: 1, y: 1)
+                        })
+                }
+            }
+             
+            DispatchQueue.main.async {
+                if self.RestrictTime <= 9 {
+                    UIView.animate(withDuration: 0.25, delay: 0, animations: {
+                        self.asyncImag_1.transform = CGAffineTransform(scaleX: 2, y: 2)
+                        })
+                    UIView.animate(withDuration: 0.25, delay: 0.25, animations: {
+                        self.asyncImag_1.transform = CGAffineTransform(scaleX: 1, y: 1)
+                        })
+                    UIView.animate(withDuration: 0.25, delay: 0.5, animations: {
+                        self.asyncImag_1.transform = CGAffineTransform(scaleX: 2, y: 2)
+                        })
+                    UIView.animate(withDuration: 0.25, delay: 0.75, animations: {
+                        self.asyncImag_1.transform = CGAffineTransform(scaleX: 1, y: 1)
+                        })
+                }
+            }
+        }
+    }
+    
+
     
 //MARK: - 각 농작물 재배 시작하는 버튼
 
