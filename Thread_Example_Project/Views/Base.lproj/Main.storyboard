@@ -652,17 +652,17 @@
                         <outlet property="waiting" destination="Fpt-UW-Kw3" id="C6N-yb-tta"/>
                         <outlet property="waitingStackView" destination="vfE-qN-QIU" id="AOV-IN-WCO"/>
                         <outlet property="wellcomeStackView" destination="9ZP-fC-VHj" id="Yuy-10-90M"/>
-                        <segue destination="FA0-ct-EtQ" kind="show" id="VfI-Gg-e3I"/>
+                        <segue destination="FA0-ct-EtQ" kind="show" id="xhO-Bz-1sj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="bIC-PF-yY9" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="915.38461538461536" y="44.7867298578199"/>
         </scene>
-        <!--View Controller-->
+        <!--Game Over View Controller-->
         <scene sceneID="ZKr-kX-hbr">
             <objects>
-                <viewController id="FA0-ct-EtQ" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="GameOverViewController" useStoryboardIdentifierAsRestorationIdentifier="YES" id="FA0-ct-EtQ" customClass="GameOverViewController" customModule="Thread_Example_Project" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="gMM-uI-dLA">
                         <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -670,31 +670,63 @@
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.29999999999999999" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="스크린샷 2022-08-04 12.40.04.png" translatesAutoresizingMaskIntoConstraints="NO" id="L8Q-Cv-qq3">
                                 <rect key="frame" x="0.0" y="0.0" width="390" height="844"/>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="판매 건수" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pav-gN-nE5">
-                                <rect key="frame" x="39" y="182" width="147" height="48"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="40"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="총 매출" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n3R-QO-wX1">
-                                <rect key="frame" x="56" y="109" width="113" height="48"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="boldSystem" pointSize="40"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                            </label>
+                            <stackView opaque="NO" contentMode="scaleToFill" distribution="fillProportionally" spacing="48" translatesAutoresizingMaskIntoConstraints="NO" id="d8R-Yc-2OL">
+                                <rect key="frame" x="20" y="109" width="350" height="121"/>
+                                <subviews>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="RFy-zM-Oi8">
+                                        <rect key="frame" x="0.0" y="0.0" width="175.33333333333334" height="121"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="총 매출" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="n3R-QO-wX1">
+                                                <rect key="frame" x="31.333333333333336" y="0.0" width="112.33333333333331" height="48"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="40"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="판매 건수" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Pav-gN-nE5">
+                                                <rect key="frame" x="14" y="73" width="147" height="48"/>
+                                                <fontDescription key="fontDescription" type="boldSystem" pointSize="40"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacing="25" translatesAutoresizingMaskIntoConstraints="NO" id="CSk-ZX-PhD">
+                                        <rect key="frame" x="223.33333333333334" y="0.0" width="126.66666666666666" height="121"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="j1O-RR-oCv">
+                                                <rect key="frame" x="0.0" y="0.0" width="126.66666666666667" height="48"/>
+                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="40"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="wfQ-eF-kAE">
+                                                <rect key="frame" x="0.0" y="73" width="126.66666666666667" height="48"/>
+                                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="40"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="9at-EI-Dtf"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="d8R-Yc-2OL" firstAttribute="leading" secondItem="9at-EI-Dtf" secondAttribute="leading" constant="20" id="3mb-CQ-zpK"/>
                             <constraint firstItem="L8Q-Cv-qq3" firstAttribute="top" secondItem="gMM-uI-dLA" secondAttribute="top" id="Ddu-3i-Q6O"/>
                             <constraint firstItem="L8Q-Cv-qq3" firstAttribute="leading" secondItem="9at-EI-Dtf" secondAttribute="leading" id="MjW-Kt-GWM"/>
                             <constraint firstAttribute="bottom" secondItem="L8Q-Cv-qq3" secondAttribute="bottom" id="R7B-o4-Xg5"/>
+                            <constraint firstItem="9at-EI-Dtf" firstAttribute="trailing" secondItem="d8R-Yc-2OL" secondAttribute="trailing" constant="20" id="aYG-4D-XOO"/>
                             <constraint firstItem="L8Q-Cv-qq3" firstAttribute="trailing" secondItem="9at-EI-Dtf" secondAttribute="trailing" id="kgu-hg-rQi"/>
+                            <constraint firstItem="d8R-Yc-2OL" firstAttribute="top" secondItem="9at-EI-Dtf" secondAttribute="top" constant="65" id="woB-cs-FM0"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="kFl-QR-Hf5"/>
+                    <connections>
+                        <outlet property="sumCount" destination="wfQ-eF-kAE" id="wBy-Oc-0D1"/>
+                        <outlet property="sumSELL" destination="j1O-RR-oCv" id="lop-4L-bC9"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="gKm-du-dsA" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

@@ -26,6 +26,7 @@
 		9B3F1169289A604F00A89105 /* 스크린샷_2022-08-03_16.50.17-removebg-preview.png in Resources */ = {isa = PBXBuildFile; fileRef = 9B3F1167289A604F00A89105 /* 스크린샷_2022-08-03_16.50.17-removebg-preview.png */; };
 		9BA35074289B771D00248E2D /* 스크린샷 2022-08-04 12.40.04.png in Resources */ = {isa = PBXBuildFile; fileRef = 9BA35073289B771D00248E2D /* 스크린샷 2022-08-04 12.40.04.png */; };
 		9BA35076289B7E4700248E2D /* 스크린샷_2022-08-04_13.09.51-removebg-preview.png in Resources */ = {isa = PBXBuildFile; fileRef = 9BA35075289B7E4700248E2D /* 스크린샷_2022-08-04_13.09.51-removebg-preview.png */; };
+		9BC7CC1D289B80860039E68B /* GameOverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BC7CC1C289B80860039E68B /* GameOverViewController.swift */; };
 		9BDC6DBE289565A900A2AE66 /* GuestStruct.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BDC6DBD289565A900A2AE66 /* GuestStruct.swift */; };
 		9BDC6DC0289565E500A2AE66 /* GuestDataModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9BDC6DBF289565E500A2AE66 /* GuestDataModel.swift */; };
 /* End PBXBuildFile section */
@@ -53,6 +54,7 @@
 		9B3F1167289A604F00A89105 /* 스크린샷_2022-08-03_16.50.17-removebg-preview.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "스크린샷_2022-08-03_16.50.17-removebg-preview.png"; path = "../../../../Downloads/스크린샷_2022-08-03_16.50.17-removebg-preview.png"; sourceTree = "<group>"; };
 		9BA35073289B771D00248E2D /* 스크린샷 2022-08-04 12.40.04.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "스크린샷 2022-08-04 12.40.04.png"; path = "../../../../../../var/folders/3z/1d_1pw1s1vqd8nrfp044b0840000gn/T/TemporaryItems/NSIRD_screencaptureui_apXa1r/스크린샷 2022-08-04 12.40.04.png"; sourceTree = "<group>"; };
 		9BA35075289B7E4700248E2D /* 스크린샷_2022-08-04_13.09.51-removebg-preview.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "스크린샷_2022-08-04_13.09.51-removebg-preview.png"; path = "../../../../Downloads/스크린샷_2022-08-04_13.09.51-removebg-preview.png"; sourceTree = "<group>"; };
+		9BC7CC1C289B80860039E68B /* GameOverViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameOverViewController.swift; sourceTree = "<group>"; };
 		9BDC6DBD289565A900A2AE66 /* GuestStruct.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuestStruct.swift; sourceTree = "<group>"; };
 		9BDC6DBF289565E500A2AE66 /* GuestDataModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuestDataModel.swift; sourceTree = "<group>"; };
 		FE1E4405A846A92058ACFAF2 /* Pods_Thread_Example_Project.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Thread_Example_Project.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -116,6 +118,7 @@
 			isa = PBXGroup;
 			children = (
 				9B3F1162289A4C1D00A89105 /* LoginViewController.swift */,
+				9BC7CC1C289B80860039E68B /* GameOverViewController.swift */,
 				250826052698210100922ABD /* ViewController.swift */,
 				25082616269828A000922ABD /* SecondController.swift */,
 			);
@@ -301,6 +304,7 @@
 				250826062698210100922ABD /* ViewController.swift in Sources */,
 				25082617269828A000922ABD /* SecondController.swift in Sources */,
 				9BDC6DBE289565A900A2AE66 /* GuestStruct.swift in Sources */,
+				9BC7CC1D289B80860039E68B /* GameOverViewController.swift in Sources */,
 				250826022698210100922ABD /* AppDelegate.swift in Sources */,
 				9BDC6DC0289565E500A2AE66 /* GuestDataModel.swift in Sources */,
 				250826042698210100922ABD /* SceneDelegate.swift in Sources */,

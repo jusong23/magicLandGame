@@ -191,12 +191,11 @@ class ViewController: UIViewController {
         self.MainTimer = nil
         self.mainTimeLabel.text = "끝"
         
-        guard let viewController = self.storyboard?.instantiateViewController(withIdentifier: "ViewController") as? ViewController else { return }
-        viewController.name = user.profile?.name
-            self.navigationController?.pushViewController(viewController, animated: true)
-        
-        
-        
+        guard let viewController = self.storyboard?.instantiateViewController(withIdentifier: "GameOverViewController") as? GameOverViewController else { return }
+            viewController.SELL = self.sumOfToday_label.text
+            viewController.Count = String(self.sumOfToday.count)
+            self.present(viewController, animated: true, completion: nil)
+
     }
     
 //MARK: - 게임실행 버튼 (onButton, wellComeGuest, stopMainTimer, willBeOver[@escaping] )
