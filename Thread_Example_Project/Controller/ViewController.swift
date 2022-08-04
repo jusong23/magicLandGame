@@ -18,7 +18,7 @@ class ViewController: UIViewController {
     var numC: Int = 0
     var numS: Int = 0
 
-   var guests:[String] = ["스크린샷_2022-08-03_16.44.53-removebg-preview.png",
+   var guests:[String] = ["스크린샷_2022-08-04_13.09.51-removebg-preview.png",
                            "스크린샷_2022-08-03_16.49.31-removebg-preview.png",
                            "스크린샷_2022-08-03_16.50.17-removebg-preview.png"
                             ]
@@ -35,7 +35,10 @@ class ViewController: UIViewController {
     var sumOfBakery:Int = 0
     var sumOfCoffee:Int = 0
     var sumOfSmoothie:Int = 0
-        
+    
+    @IBOutlet weak var angryImage: UIImageView!
+    @IBOutlet weak var sellingCount: UILabel!
+    
     @IBOutlet weak var foodNameStackView: UIStackView!
     @IBOutlet weak var foodCountStackView: UIStackView!
     
@@ -63,6 +66,7 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var gameStart: UIButton!
     @IBOutlet weak var wellcomeStackView: UIStackView!
+    @IBOutlet weak var sellingStackView: UIStackView!
     
     @IBOutlet weak var cornImage: UIImageView!
     @IBOutlet weak var starberryImage: UIImageView!
@@ -124,6 +128,7 @@ class ViewController: UIViewController {
                 }
                 else {
                     print("대기인원이 3명 이상입니다. 밖에 손님들이 화가 났어요!")
+                    self.angryImage?.isHidden = false
                 }
 //
 //                DispatchQueue.global(qos: .userInteractive).async {
@@ -185,13 +190,21 @@ class ViewController: UIViewController {
         self.MainTimer?.cancel()
         self.MainTimer = nil
         self.mainTimeLabel.text = "끝"
+        
+        guard let viewController = self.storyboard?.instantiateViewController(withIdentifier: "ViewController") as? ViewController else { return }
+        viewController.name = user.profile?.name
+            self.navigationController?.pushViewController(viewController, animated: true)
+        
+        
+        
     }
     
 //MARK: - 게임실행 버튼 (onButton, wellComeGuest, stopMainTimer, willBeOver[@escaping] )
     
     @IBAction func go(_ sender: Any) {
+        self.sellingStackView.isHidden = false
         self.guestImage.isHidden = false
-        self.guestImage.image = UIImage(named: self.guests[0])
+        self.guestImage.image = UIImage(named: "스크린샷_2022-08-03_16.44.53-removebg-preview.png")
         self.gameStart.isHidden = true
         self.wellcomeStackView.isHidden = true
         self.foodNameStackView.isHidden = false
@@ -201,6 +214,7 @@ class ViewController: UIViewController {
         self.onButton()
         self.wellComeGuest()
     
+        self.tapComplete.isEnabled = false
         self.tapComplete.backgroundColor = .black
         self.tapComplete.setTitle("재배 중 입니다. . .", for: .normal)
         
@@ -222,6 +236,7 @@ class ViewController: UIViewController {
                 }
                 
                 if self.completeOrder.count == 3 {
+                    self.tapComplete.isEnabled = true
                     self.tapComplete.backgroundColor = .red
                     self.tapComplete.setTitle("주문 완료", for: .normal)
 
@@ -262,11 +277,20 @@ class ViewController: UIViewController {
 //MARK: - 주문완료 버튼
     
     @IBAction func CompleteOrder(_ sender: Any) {
+        self.tapBakery.backgroundColor = .white
+        self.tapCoffee.backgroundColor = .white
+        self.tapSmoothie.backgroundColor = .white
+        
+        self.tapBakery.setTitle("재배 하기", for: .normal)
+        self.tapCoffee.setTitle("재배 하기", for: .normal)
+        self.tapSmoothie.setTitle("재배 하기", for: .normal)
+
         self.guestImage.image = UIImage(named: self.guests[Int(arc4random_uniform(2))])
         
         self.cornImage.image = nil
         self.starberryImage.image = nil
         self.potatoImage.image = nil
+        self.angryImage?.isHidden = true
 
         print("주문완료")
         self.sumOfToday.append(sumOfBakery + sumOfCoffee + sumOfSmoothie)
@@ -275,6 +299,9 @@ class ViewController: UIViewController {
         var total = self.sumOfToday.reduce(0, { x, y in
             x + y
         })
+        
+        self.sellingCount.text = String(self.sumOfToday.count)
+
         print("매출 : \(total)")
         self.sumOfToday_label.text = String(total)
         
@@ -310,6 +337,10 @@ class ViewController: UIViewController {
         self.sumOfCoffee = 0
         self.sumOfSmoothie = 0
         
+        self.tapComplete.isEnabled = false
+        self.tapComplete.backgroundColor = .black
+        self.tapComplete.setTitle("재배 중 입니다. . .", for: .normal)
+        
     }
 
 //MARK: - BAKERY
@@ -329,8 +360,12 @@ class ViewController: UIViewController {
                 self.changeImage_Corn(index: makeTime)
                 self.cornPrograssView.progress = Float(makeTime) / Float(duration)
                 self.tapBakery.setTitle("재배 중", for: .normal)
+                self.tapBakery.backgroundColor = .brown
+
                 if makeTime == 0 {
                     self.tapBakery.setTitle("재배 하기", for: .normal)
+                    self.tapBakery.backgroundColor = .white
+
                     self.tapBakery.isEnabled = true
                     self.stopBakeryTimer()
                     self.numB += 1
@@ -340,6 +375,7 @@ class ViewController: UIViewController {
                     if self.numB == self.guestDataModel.arrayGuestStruct[0].Bakery! {
                         self.cornImage.image = UIImage.init(named: "스크린샷_2022-08-01_17.49.27-removebg-preview.png")
                         self.tapBakery.setTitle("재배 완료", for: .normal)
+                        self.tapBakery.backgroundColor = .red
                         self.tapBakery.isEnabled = false
                         self.numOfBakery.textColor = .red
                         self.completeOrder.append(1)
@@ -393,8 +429,12 @@ class ViewController: UIViewController {
                 self.changeImage_Starberry(index: makeTime)
                 self.starberryPrograssView.progress = Float(makeTime) / Float(duration)
                 self.tapCoffee.setTitle("재배 중", for: .normal)
+                self.tapCoffee.backgroundColor = .brown
+
                 if makeTime == 0 {
                     self.tapCoffee.setTitle("재배 하기", for: .normal)
+                    self.tapCoffee.backgroundColor = .white
+
                     self.tapCoffee.isEnabled = true
                     self.stopCoffeeTimer()
                     self.numC += 1
@@ -404,6 +444,7 @@ class ViewController: UIViewController {
                     if self.numC == self.guestDataModel.arrayGuestStruct[0].Coffee! {
                         self.starberryImage.image = UIImage.init(named: "스크린샷_2022-08-01_17.49.27-removebg-preview.png")
                         self.tapCoffee.setTitle("재배 완료", for: .normal)
+                        self.tapCoffee.backgroundColor = .red
                         self.tapCoffee.isEnabled = false
                         self.numOfCoffee.textColor = .red
                         self.completeOrder.append(1)
@@ -454,8 +495,12 @@ class ViewController: UIViewController {
                 self.changeImage_Potato(index: makeTime)
                 self.potatoPrograssView.progress = Float(makeTime) / Float(duration)
                 self.tapSmoothie.setTitle("재배 중", for: .normal)
+                self.tapSmoothie.backgroundColor = .brown
+
                 if makeTime == 0 {
                     self.tapSmoothie.setTitle("재배 하기", for: .normal)
+                    self.tapSmoothie.backgroundColor = .white
+
                     self.tapSmoothie.isEnabled = true
                     self.stopSmoothieTimer()
                     self.numS += 1
@@ -464,6 +509,7 @@ class ViewController: UIViewController {
                     self.priceOfSmoothie.text = String(self.sumOfSmoothie)
                     if self.numS == self.guestDataModel.arrayGuestStruct[0].Smoothie! {
                         self.tapSmoothie.setTitle("재배 완료", for: .normal)
+                        self.tapSmoothie.backgroundColor = .red
                         self.potatoImage.image = UIImage.init(named: "스크린샷_2022-08-01_17.49.27-removebg-preview.png")
                         self.tapSmoothie.isEnabled = false
                         self.numOfSmoothie.textColor = .red
