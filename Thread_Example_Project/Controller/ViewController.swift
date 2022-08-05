@@ -70,7 +70,7 @@ class ViewController: UIViewController {
         if let codePresentName = name {
             self.nickName.text = codePresentName
         }
-        
+            
         
     }
     

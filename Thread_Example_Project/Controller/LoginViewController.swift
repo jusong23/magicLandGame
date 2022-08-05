@@ -10,7 +10,6 @@ import GoogleSignIn
 
 class LoginViewController: UIViewController {
     
-    var loginCompleteNumber = 0
     
     @IBOutlet weak var google: UIButton!
     
@@ -26,16 +25,12 @@ class LoginViewController: UIViewController {
             if let error = error { return }
             guard let user = user else { return }
             print(user.profile?.name)
-            self.loginCompleteNumber += 1
             
-            if self.loginCompleteNumber == 1 {
-                print(self.loginCompleteNumber)
                 guard let viewController = self.storyboard?.instantiateViewController(withIdentifier: "ViewController") as? ViewController else { return }
                 viewController.name = user.profile?.name
                     self.navigationController?.pushViewController(viewController, animated: true)
                 
-                self.loginCompleteNumber -= 1
-            }
+            
         }
     }
     
