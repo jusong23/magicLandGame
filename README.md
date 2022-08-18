@@ -1,36 +1,54 @@
-## 🌾 마법의 텃밭 with MultiThread
+## 🌾 마법의 텃밭 with Multi Thread
 
 ### ✏️ New Knowledge
 
-1.
+1. 동기, 비동기, Serial, Concurensy
+2. escaping closure
+3. DispacthQueue
+4. GCD
+5. weak self
+6. 🔥 async - await
 
 ---
 
 ### 📱 Final Result
 
-https://user-images.githubusercontent.com/74387813/185358799-d2db9839-9f12-4925-a274-de9120803800.mp4
 
 ---
 
 ### 🧠 Gotten & Used Component
 
-1. TableVIew
-2. DataModel
-3. Notification Center
-4. Alert
-5. MVC Pattern
-6. Page Tab Library (Tab man)
-7. Section (Table View Header)
+1. 순환참조 방지 [weak self]
+2. escaping closure
+  * 함수가 반환 되어 종료되어도, 외부에 선언한 클로저를 통해 반환된 함수를 빠져나와 클로저를 실행
+  * 네트워킹과 UI작업이 동시에 이루어져야하는 통신 작업에서 주로 쓰임
+3. 로그인 기능
+  * Google OAuth
+4. UIAnimate
 
 ---
 
 ### 🗣 Grammar 
 
-- 익스탠션 : [https://jusung.gitbook.io/the-swift-language-guide/language-guide/20-extensions](https://jusung.gitbook.io/the-swift-language-guide/language-guide/20-extensions)
-- 프로토콜 : [https://jusung.gitbook.io/the-swift-language-guide/language-guide/21-protocols](https://jusung.gitbook.io/the-swift-language-guide/language-guide/21-protocols)
-- 익스텐션, 프로토콜 : [https://blog.yagom.net/529/](https://blog.yagom.net/529/)
-- 위 두 개념에 대한 실습 블로그글 : [https://swift-it-world.tistory.com/21](https://swift-it-world.tistory.com/21)
-- Delegate : [https://zeddios.tistory.com/8](https://zeddios.tistory.com/8)
+- 클로저를 사용하게 될 때, 알아야하는 개념
+    
+    [박교수의 Swift강좌21 - 클로저강한참조순환 (널널한 교수의 Swift 2) ft. Swift 코딩](https://youtu.be/ofiLLBeJJSc)
+    
+    [Strong vs. Weak Swift 5: What is Weak Self (Xcode 11, 2020)](https://youtu.be/chI-B8u4MBs)
+    
+    [Swift - 클로저 기본](https://www.youtube.com/watch?v=Ix9gGuupjBU&t=14s&ab_channel=yagom)
+    
+    [Swift - 클로저 고급](https://www.youtube.com/watch?v=WvqYKP6VgNQ&ab_channel=yagom)
+    
+
+- 탈출 클로저
+    
+    [[SWIFT] Escaping Closure(탈출 클로저)](https://dongminyoon.tistory.com/14)
+    
+
+- ✅이번 수업 개념
+    
+    [Concurrency and Grand Central Dispatch in Swift (GCD)](https://medium.com/swift-coding/concurrency-and-grand-central-dispatch-in-swift-gcd-f0ae063973c2)
 
 ---
 
