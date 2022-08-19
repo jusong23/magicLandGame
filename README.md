@@ -8,6 +8,17 @@
 4. GCD
 5. weak self
 6. 🔥 async - await
+7. Dispatch Queue
+    * 버그나는 부분만 비동기로 감싸기
+8. 생성패턴
+    * 팩토리패턴, 다음 스테이지로 넘어각
+9. 진략패턴
+    * enum으로 나눠서 여러게임으로 나누기
+10. Caseiterable 
+    * enum의 case를 배열처럼 하나씩 접근가능하게 함
+11. Capture Lisk(메모리 누수)
+    * return: 원하는 값을 던져주고 메모리에서 해지하는 것
+  
 
 ---
 
